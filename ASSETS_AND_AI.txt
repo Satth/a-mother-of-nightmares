@@ -57,10 +57,14 @@ RECURSO DE TERCEIROS 1 — Godot MCP (addon do editor)
 - Alterações feitas pela equipe/IA: nenhuma no código do addon.
 - Avisos/creditação necessários: incluir o texto MIT + "Copyright (c) 2026 Johnny D" nos créditos
   OU garantir que o addon não faça parte da fonte/build publicada.
-- AÇÃO PENDENTE (bloqueia conformidade): (a) adicionar `addons/godot_mcp/LICENSE` com o texto MIT, e/ou
-  (b) configurar o preset de export para **excluir `addons/`** da build jogável, e (c) listar o addon
-  nos créditos. Responsável: lead. Status: pendente.
-- Publicado nos créditos? Não (pendente)
+- ESTADO (2026-10-17, RESOLVIDO para a build): o addon **não é distribuído** na build jogável. Ambos os
+  presets de export (`"Windows Desktop"` e `"Web"`) usam `exclude_filter="addons/*, tools/*"`. Verificado
+  no `index.pck` gerado: nenhum arquivo de código do addon está empacotado (`plugin.gd` e demais ausentes).
+  A única ocorrência da string `godot_mcp` no PCK é a linha `res://addons/godot_mcp/plugin.cfg` presente no
+  **mapeamento de UIDs** do cache `.godot/uid_cache.bin` (metadado de cache, não código do jogo).
+  Recomendações restantes (não bloqueiam a build): (a) incluir `addons/godot_mcp/LICENSE` no repositório
+  de origem; (b) citar "Godot MCP (MIT, © 2026 Johnny D)" nos créditos de desenvolvimento.
+- Publicado nos créditos? Não (recomendado citar como ferramenta de desenvolvimento, não como conteúdo do jogo)
 - Verificado por/data: lead (agente), 2026-10-17
 
 RECURSO DE TERCEIROS 2 — Godot Engine
@@ -101,9 +105,26 @@ IA 1 — Código e cenas do jogo (GDScript / `.tscn`)
   binário do Godot por linha de comando (headless).
 - Como foi utilizado: geração e revisão de código, criação de cenas por texto (`.tscn` escrito à mão),
   e testes de fumaça headless (`res://tools/validate.tscn`).
-- Validação humana/teste realizado: **PENDENTE**. O lead deve revisar o diff e jogar o fluxo completo
-  antes da entrega (AGENTS.md §4 e §12).
+- Validação humana/teste realizado: **teste automatizado feito; revisão/assinatura humana PENDENTE.**
+  Executado: `tools/validate.tscn` → `VALIDATE_OK`; `tools/journey_test.tscn` → `JOURNEY_OK`, 92 checagens,
+  0 falhas, exit 0; build exportada aberta e executada fora do editor. Falta o lead/equipe jogar e revisar
+  o diff antes de publicar (AGENTS.md §4 e §12).
 - Responsável/data: lead (agente) + equipe, 2026-10-17
+- Declarado no itch.io/pitch/Anexo III? Não (pendente)
+
+IA 3 — Ferramental de teste/release e correções pós-revisão
+- Categoria: código (ferramentas de teste + configuração de build) e correções pontuais
+- Conteúdo gerado/modificado por IA: `tools/journey_test.gd`/`.tscn` (teste de fluxo fim a fim §12),
+  `tools/screenshots.gd`/`.tscn` (render de cada dia para PNG + luminância média, no lugar do MCP offline),
+  `tools/validate*.gd`, `tools/probe_ext.*`, `export_presets.cfg` (Windows/Web), e o lote de correções
+  apontadas pela revisão T6 (dia 3 legível, rótulo do final sem sobreposição, spawn da casa em `(180,600)`,
+  largura do rótulo de status, guardas `is_connected`, diálogo nunca aberto por `_process`).
+- Arquivos/trechos afetados: `tools/**`; `export_presets.cfg`; `project.godot` (`stretch/aspect`);
+  `scenes/ending.tscn`; `scenes/house_interior.tscn`; `scripts/autoload/hud.gd`; `scripts/forest_loop.gd`;
+  `scripts/visual/atmosphere.gd`.
+- Ferramenta/modelo: idem IA 1 (OpenCode; `opencode/deepseek-v4.1-flash-free`), incluindo subagentes
+  (`explore` para auditoria/revisão, `general` para implementação).
+- Validação humana: revisão PENDENTE (mesma ação da IA 1).
 - Declarado no itch.io/pitch/Anexo III? Não (pendente)
 
 IA 2 — Documentação de produção
@@ -133,15 +154,19 @@ isenção da declaração de IA.
 6. CHECKLIST DE PUBLICAÇÃO E CONFORMIDADE
 ============================================================
 [x] Nenhum recurso com licença NC/NonCommercial, pago ou desconhecido foi usado como conteúdo de jogo.
-[ ] Cada recurso externo incorporado tem origem e licença exatas registradas.
-    → Godot MCP (MIT) registrado; falta adicionar o arquivo de licença e/ou excluí-lo do export.
-[ ] Todas as licenças permitem o uso previsto; atribuições e avisos foram preparados.
-[ ] O registro corresponde aos arquivos efetivamente presentes na build final.
+[x] Cada recurso externo incorporado tem origem e licença exatas registradas.
+    → Godot Engine 4.7.2 (MIT) e Godot MCP (MIT, © 2026 Johnny D). O addon MCP **não é distribuído** na
+      build (excluído por `exclude_filter`), verificado no PCK.
+[x] Todas as licenças permitem o uso previsto; atribuições e avisos foram preparados.
+    → MIT do addon dispensado na build (não redistribuído); recomendação de citar a Godot nos créditos.
+[x] O registro corresponde aos arquivos efetivamente presentes na build final.
+    → Conferido no `index.pck`: só cenas/scripts do jogo + `icon.svg`; sem `addons/**` e sem `tools/**`.
 [ ] Créditos e lista de assets gratuitos de terceiros, com links e licenças, publicados na página do itch.io.
 [ ] O uso de IA está declarado e as ferramentas estão identificadas corretamente (itch.io/pitch/Anexo III).
 [ ] O pitch inclui as informações de assets/IA solicitadas.
 [ ] O Anexo III do regulamento foi preenchido e assinado por todos os integrantes.
-[ ] O teste final foi realizado na build exportada, não somente no editor.
+[x] O teste final foi realizado na build exportada, não somente no editor.
+    → Build Windows executada fora do editor e Web exportada; ver Seção 7 (limitação de injeção de teclado).
 [ ] Uma cópia do registro e da lista de créditos final foi guardada pela equipe.
 
 Links de referência para procurar recursos (conferir a página e licença de cada item):
@@ -150,3 +175,34 @@ Links de referência para procurar recursos (conferir a página e licença de ca
 - Freesound — FAQ de licenças; não usar CC-BY-NC: https://freesound.org/help/faq/
 - itch.io — assets gratuitos marcados para uso comercial; conferir a licença de cada página: https://itch.io/game-assets/free/tag-commercial-use/tag-pixel-art
 - Godot Asset Library — catálogo gratuito com licenças distintas: https://docs.godotengine.org/en/stable/community/asset_library/what_is_assetlib.html
+
+============================================================
+7. VERIFICAÇÃO DA BUILD E DO EXPORT (evidências, 2026-10-17)
+============================================================
+Ambiente: Godot 4.7.2-stable (`ed1daf0bf`), templates oficiais em
+`%APPDATA%\Godot\export_templates\4.7.2.stable\`.
+
+Ferramentas antes de exportar (todas com exit 0):
+- `--headless --path . --import` (cache de classes)
+- `--headless --path . res://tools/validate.tscn` → `VALIDATE_OK`
+- `--headless --path . res://tools/journey_test.tscn` → `journey summary: 92 checks, 0 failures` / `JOURNEY_OK`
+  (percorre o fluxo §12 com as ações reais do Input Map e as cenas reais)
+
+Export:
+- Windows Desktop: `build/windows/A Mother of Nightmares.exe` (109.227.752 bytes; PCK embutido — marcador `GDPC`).
+- Web (itch.io): `build/web/` (`index.html`, `index.js`, `index.wasm` 39,5 MB, `index.pck` 59 KB, ícones, worklets).
+
+Abertura da build exportada fora do editor (AGENTS.md §12, passo 11):
+- A build Windows abre em janela própria intitulada "A Mother of Nightmares", renderiza a casa no Dia 1
+  com o HUD `Dia 1/3 — Madeira 0/3` e a caixa de diálogo do filho. Log da engine na máquina de teste:
+  `D3D12 12_0 - Forward+ - Using Device #0: NVIDIA GeForce RTX 3050 6GB Laptop GPU`; **sem `SCRIPT ERROR`**.
+- Teste de robustez: `E` ×3, `D` pressionado 4 s, `A` pressionado 3 s e setas injetados no processo em
+  execução → permaneceu vivo e responsivo, sem erro no stdout.
+- Conteúdo dos builds: `move_left`, `move_right`, `interact` e os textos de prompt estão presentes no
+  `index.pck` e no PCK embutido do `.exe`; `addons/**` e `tools/**` estão ausentes.
+
+Limitação registrada (honestidade sobre evidência): a máquina de teste usa escala de DPI 125% e outras
+janelas do sistema se sobrepõem à área de captura, então **não foi possível registrar de forma confiável o
+efeito visual das teclas injetadas** (por exemplo, a posição do jogador após andar). O controle de teclado
+por ações é coberto pelo teste headless, que pressiona as mesmas ações do Input Map nas cenas reais. Para a
+entrega, o lead/equipe deve jogar manualmente a build exportada (checklist AGENTS.md §12) antes de publicar.

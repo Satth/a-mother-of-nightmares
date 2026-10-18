@@ -182,6 +182,13 @@ Rules (from AGENTS.md §6):
 - **Day 3 forest flow**: the spirit is present from scene start and blocks the left exit; the player is
   NOT required to cut any tree on day 3. `Spirit` is an `Interactable`; `interact()` →
   `SceneTransition.transition_to("res://scenes/ending.tscn")`.
+  - The day-3 "no way back" note is shown through **`HUD.set_status()`/`HUD.set_prompt()`**, never by
+    opening `Dialogue` from `_process` (that violated the double-trigger rule and raced the same `E` press).
+  - Day-3 darkness is **bounded** because three grading layers stack (scene `modulate`, scene overlay,
+    `Atmosphere` day-3 tint). Frozen values so the frame stays readable:
+    scene `modulate = Color(0.86, 0.86, 0.90)`, overlay `Color(0.04, 0.04, 0.06, 0.28)`,
+    `Atmosphere.day3_tint` alpha `0.30`. Raising any of them re-introduces the "player/spirit invisible"
+    defect found by the reviewer.
 - **HUD status string** (canonical): `"Dia %d/3 — Madeira %d/3"`.
 - **Day 3 house**: child removed and a distinct empty-bed visual shown; the axe remains obtainable.
 
@@ -211,7 +218,8 @@ which is gitignored and only rebuilt by the **editor**. After pulling new `class
 
 ### House scene contract (builder-core)
 - Node `HouseInterior` (Node2D) + `scripts/house_interior.gd`.
-- `Player` instance, spawned near the door.
+- `Player` instance, spawned at `Vector2(180, 600)` — **in range of the axe at `(130, 600)`** so the axe
+  can be picked up without walking (was "near the door"; that made the axe unreachable at spawn).
 - `child.tscn` present **only when `GameState.child_present()`** (days 1-2); absent on day 3.
 - Day 3 must show the empty bed/room detail (a distinct visual, e.g. dim empty bed + text via HUD).
 - `axe.tscn` → on interact: `GameState.set_axe(true)`, then the node stops being interactable.
@@ -273,3 +281,34 @@ shape = SubResource("RectangleShape2D_wall")
 3. Works after a scene reload / day change.
 4. No regression in the flow above.
 5. Report: result, files changed, evidence (exact command + output), risks.
+
+---
+
+## 9. Export & release (lead-only, frozen for the jam)
+
+Engine + templates: **Godot 4.7.2-stable** (`ed1daf0bf`); templates installed in
+`%APPDATA%\Godot\export_templates\4.7.2.stable\`. **Do not upgrade the engine during the jam.**
+
+Display: viewport `1280x720`, `window/stretch/mode="canvas_items"`, `window/stretch/aspect="keep"`.
+
+Both presets in `export_presets.cfg` (`"Windows Desktop"`, `"Web"`) share:
+`binary_format/embed_pck=true` and `exclude_filter="addons/*, tools/*"` — the editor MCP addon and the
+headless test tools must never ship in the playable build.
+
+**The output directory must already exist** or Godot fails with
+`ERROR: Preparar Modelo: O caminho de exportação informado não existe.`
+
+```
+# Windows Desktop (single .exe, PCK embedded)
+& "<godot console>" --headless --path . --export-release "Windows Desktop" "build\windows\A Mother of Nightmares.exe"
+# Web / itch.io
+& "<godot console>" --headless --path . --export-release "Web" "build\web\index.html"
+```
+
+Frozen validation order before any release commit:
+```
+& "<godot>" --headless --path . --import                        # class cache (needed after a new class_name)
+& "<godot>" --headless --path . res://tools/validate.tscn       # expect VALIDATE_OK, exit 0
+& "<godot>" --headless --path . res://tools/journey_test.tscn   # expect JOURNEY_OK, 92 checks, 0 failures, exit 0
+```
+Then **open the exported build and run it outside the editor** (AGENTS.md §12 step 11).

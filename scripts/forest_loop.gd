@@ -42,8 +42,11 @@ var _spirit: Node2D = null
 
 
 func _ready() -> void:
-	GameState.day_changed.connect(_on_day_changed)
-	GameState.wood_changed.connect(_on_wood_changed)
+	# Guarded like the other scenes so a reload/retry can never double-connect (AGENTS.md §7).
+	if not GameState.day_changed.is_connected(_on_day_changed):
+		GameState.day_changed.connect(_on_day_changed)
+	if not GameState.wood_changed.is_connected(_on_wood_changed):
+		GameState.wood_changed.connect(_on_wood_changed)
 	_collect_nodes()
 	_setup_day()
 	_update_hud()
@@ -125,7 +128,10 @@ func _apply_palette() -> void:
 	if day >= 3:
 		_sky.color = SKY_DAY3
 		_ground.color = GROUND_DAY3
-		_set_world_modulate(Color(0.62, 0.62, 0.66, 1.0))
+		# Day 3 is graded by three stacked layers (this modulate, the Overlay below, and the global
+		# Atmosphere autoload). Keep each one gentle: at 0.62 the player and the spirit were nearly
+		# invisible in the rendered frame (mean luminance 0.074 for the whole screen).
+		_set_world_modulate(Color(0.86, 0.86, 0.90, 1.0))
 	elif day == 2:
 		_sky.color = SKY_DAY2
 		_ground.color = GROUND_DAY2
@@ -150,7 +156,7 @@ func _set_world_modulate(tint: Color) -> void:
 func _apply_overlay() -> void:
 	var day := GameState.day
 	if day >= 3:
-		_overlay.color = Color(0.05, 0.05, 0.07, 0.55)
+		_overlay.color = Color(0.04, 0.04, 0.06, 0.28)
 	elif _dusk:
 		_overlay.color = Color(0.03, 0.05, 0.15, 0.58) if day == 1 else Color(0.03, 0.06, 0.16, 0.62)
 	elif day == 2:
@@ -203,9 +209,13 @@ func _process(_delta: float) -> void:
 		return
 	if not is_instance_valid(_player):
 		return
-	if _player.global_position.distance_squared_to(return_zone) > return_radius * return_radius:
-		return
-	_try_to_return()
+	var inside := _player.global_position.distance_squared_to(return_zone) <= return_radius * return_radius
+	if inside:
+		_try_to_return()
+	elif _no_way_back_shown:
+		# Left the closed exit again: drop the hint and restore the normal day-3 status.
+		_no_way_back_shown = false
+		_update_hud()
 
 
 func _try_to_return() -> void:
@@ -221,8 +231,11 @@ func _try_to_return() -> void:
 	SceneTransition.transition_to(HOUSE_SCENE)
 
 
+## Day 3: the way home is closed. Reported through the HUD status, NOT through a Dialogue box:
+## CONTRACT §6 forbids opening dialogue from `_process`, and a box opened here would race the very
+## same frame's `[E]` press — the player could dismiss the one-shot hint before ever reading it.
 func _show_no_way_back() -> void:
 	if _no_way_back_shown:
 		return
 	_no_way_back_shown = true
-	Dialogue.show_lines(["Não há caminho de volta."])
+	HUD.set_status("Dia 3/3 — não há caminho de volta")

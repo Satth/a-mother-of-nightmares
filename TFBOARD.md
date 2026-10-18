@@ -16,8 +16,8 @@
 | T3 | House scene + child/axe/door + day-3 empty room | `builder-core` (general) | P0 | T2 | ✅ done |
 | T4 | Forest loop (3 trees, dusk, return, day2 obstacle, day3 spirit) + ending | `builder-forest` (general) | P0 | T2 | ✅ done |
 | T5 | Atmosphere: per-day tint/overlay autoload (no scene edits) | `atmos` (general) | P2 | T2 | ✅ done (registered by lead) |
-| T6 | Review: verify T3/T4/T5 against acceptance + smoke test (read-only) | `reviewer` (explore) | P0 | T3, T4, T5 | ⏳ |
-| T7 | Integration: merge diffs, headless journey test, export, release | `lead` | P0 | T6 | 🟡 in progress |
+| T6 | Review: verify T3/T4/T5 against acceptance + smoke test (read-only) | `reviewer` (explore) | P0 | T3, T4, T5 | ✅ done |
+| T7 | Integration: merge diffs, headless journey test, export, release | `lead` | P0 | T6 | 🟡 in progress (builds exported + verified; only the itch.io upload remains, needs a human) |
 
 **Conflict policy:** the file-ownership table in `CONTRACT.md` §1 is binding. Two agents must never
 write the same file. `project.godot`, `CONTRACT.md`, `TFBOARD.md`, `ASSETS_AND_AI.txt` are **lead-only**.
@@ -96,3 +96,47 @@ build exported and opened outside the editor; release committed and pushed.
 - 2026-10-17 · lead · Two *test-side* bugs found and fixed while writing the journey test (not game
   bugs): (1) the first version walked *away* from the spirit, so blocking was never exercised;
   (2) a message formatted `scene.name` on a scene the transition had already freed.
+- 2026-10-17 · lead · **Visual verification tool added.** The Godot MCP playtest/screenshot capability is
+  offline this session, so `tools/screenshots.tscn` (+`.gd`) renders every day of every scene to PNG and
+  prints the mean luminance. It confirmed two defects the headless test cannot see (below).
+- 2026-10-17 · `reviewer` · **T6 done** (read-only `explore`). Verdict: **no acceptance FAIL** on T3/T4/T5.
+  It confirmed both visual findings of the lead and raised additional defects (§5.10-§5.13): dialogue could
+  be opened from `_process`, missing `is_connected` guards in `forest_loop.gd`, an unreachable axe at the
+  house spawn, a narrow HUD status label, a tautological day-2 colour assertion, and day-3 being so dark
+  that the player/spirit were nearly invisible. It also flagged two things it could not verify by reading:
+  real OS key mapping and class-name resolution inside the exported PCK.
+- 2026-10-17 · lead · **Fix batch applied** (all defects from T6 + the two visual findings):
+  day-3 no longer stacks three near-black layers (scene modulate `0.86,0.86,0.90`, overlay alpha `0.28`,
+  `Atmosphere.day3_tint` alpha `0.44→0.30`); the ending label no longer collides with `[E] reiniciar`;
+  the day-3 HUD note uses the HUD label instead of `_process`; `is_connected` guards added; house spawn
+  moved to `Vector2(180, 600)` so the axe is in range; HUD status label widened (`offset_right` 520→900);
+  the tautological day-2 assertion replaced; `stretch/aspect` set to `keep`; `embed_pck=true`.
+  Evidence after the fix batch: `--headless --import` exit 0 · `tools/validate.tscn` → `VALIDATE_OK`
+  exit 0 · `tools/journey_test.tscn` → **`journey summary: 92 checks, 0 failures` / `JOURNEY_OK`**, exit 0.
+- 2026-10-17 · lead · **Export templates blocker CLOSED.** Official `4.7.2.stable` templates installed to
+  `%APPDATA%\Godot\export_templates\4.7.2.stable\` (35 files).
+- 2026-10-17 · lead · **Windows build exported and run outside the editor** (AGENTS.md §12 step 11).
+  Command: `& "<godot console>" --headless --path . --export-release "Windows Desktop" "build\windows\A Mother of Nightmares.exe"`
+  (the output directory must already exist). Result: `build/windows/A Mother of Nightmares.exe`
+  (109,227,752 bytes, PCK embedded). Launched it: a real window titled "A Mother of Nightmares" renders
+  the house in day 1 with the HUD `Dia 1/3 — Madeira 0/3` and the child's dialogue box
+  (screenshot: `%TEMP%\opencode\screens\exported_build_window.png`). Engine log on the target machine:
+  `D3D12 12_0 - Forward+ - Using Device #0: NVIDIA GeForce RTX 3050 6GB Laptop GPU`, **no `SCRIPT ERROR`**.
+- 2026-10-17 · lead · **Web (itch.io) build exported.** Command: `... --export-release "Web" "build/web/index.html"`
+  → exit 0. Files: `index.html`, `index.js`, `index.wasm` (39.5 MB), `index.pck` (59 KB) + icons/worklets.
+- 2026-10-17 · lead · **Exclusion filter verified.** `addons/*, tools/*` are excluded from both presets.
+  The only `godot_mcp` string inside `index.pck` is `res://addons/godot_mcp/plugin.cfg` coming from the
+  packed `.godot/uid_cache.bin` **cache mapping** — no addon code (`plugin.gd`, etc.) is packed, and no
+  `tools/` file is packed. The `GDPC` marker confirms the Windows exe has the PCK embedded.
+- 2026-10-17 · lead · **Input Map confirmed present in the shipped builds.** `move_left`, `move_right`,
+  `interact` and the prompt strings ("Falar com o filho", "Pegar o machado") are present in `index.pck`
+  and in the embedded PCK of the exe.
+- 2026-10-17 · lead · **Exported-binary robustness check.** Injected OS key events (`E` ×3, hold `D` 4 s,
+  hold `A` 3 s, arrows) into the running exported build: the process stayed alive and `Responding=True`
+  through every phase and its stdout contained only the engine banner + renderer line — **no `SCRIPT ERROR`,
+  no warning**. *Limitation (honest):* the host runs at 125% DPI and other desktop windows overlap the
+  captured region, so the on-screen *effect* of those injected keys could not be recorded reliably; the
+  gameplay effect of the same keys is covered by the headless journey test, which presses through the real
+  Input Map. See `ASSETS_AND_AI.txt` §7.
+- 2026-10-17 · lead · **Freeze for release.** `builder-forest` (the last writer to the shipped tree) was
+  asked to stop and acknowledged; no agent has write access to the frozen tree after this point.

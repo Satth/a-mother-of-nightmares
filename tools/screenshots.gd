@@ -59,6 +59,10 @@ func _run() -> void:
 				await _capture("house_day1_dialogue")
 			else:
 				printerr("SHOT_DIALOGUE_NOT_OPEN")
+			# `Dialogue` is an AUTOLOAD: a box left open survives every later scene change, covers the
+			# bottom of every following frame and suppresses all interaction prompts. Close it here.
+			Dialogue.show_lines([])
+			await _settle(10)
 		elif day == 2:
 			await _capture("house_day2")
 		else:

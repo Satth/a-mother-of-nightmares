@@ -11,7 +11,7 @@ const LAYER := 40
 ## Subtle overlays: alpha stays low so gameplay visuals and HUD text remain readable.
 @export var day1_tint := Color(0.72, 0.50, 0.26, 0.14) ## warm / slightly sepia
 @export var day2_tint := Color(0.34, 0.48, 0.78, 0.20) ## cold / desaturated blue
-@export var day3_tint := Color(0.06, 0.06, 0.10, 0.44) ## near-monochrome, dark, heavy
+@export var day3_tint := Color(0.06, 0.06, 0.10, 0.30) ## near-monochrome, dark, heavy
 
 const FOG_ALPHA_BASE := 0.05
 const FOG_ALPHA_SWING := 0.03

@@ -22,7 +22,7 @@ func _build_ui() -> void:
 	_status_label.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	_status_label.offset_left = 20.0
 	_status_label.offset_top = 14.0
-	_status_label.offset_right = 520.0
+	_status_label.offset_right = 900.0
 	_status_label.offset_bottom = 44.0
 	_status_label.add_theme_font_size_override("font_size", 18)
 	_status_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))

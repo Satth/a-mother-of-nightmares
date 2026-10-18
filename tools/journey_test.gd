@@ -24,6 +24,7 @@ const FRAME_BUDGET := 8000
 var _checks := 0
 var _fails: Array[String] = []
 var _fatal := false
+var _day1_sky := Color()
 
 
 func _ready() -> void:
@@ -225,6 +226,7 @@ func _day1_forest() -> void:
 	_check(GameState.day == 1, "still day 1 inside the forest")
 	_check(GameState.wood == 0, "wood starts at 0 for the day")
 	_check(_hud_status() == "Dia 1/3 — Madeira 0/3", "HUD shows 'Dia 1/3 — Madeira 0/3' (got '%s')" % _hud_status())
+	_day1_sky = (forest.get_node("Sky") as ColorRect).color
 
 	var trees := forest.get_node_or_null("Trees")
 	if trees == null or trees.get_child_count() != 3:
@@ -329,8 +331,13 @@ func _day2_forest() -> void:
 
 	_check(GameState.day == 2, "still day 2 inside the forest")
 	_check((forest.get_node_or_null("Fog") as ColorRect).visible, "day 2 shows the fog layer")
-	var fog_color := (forest.get_node("Sky") as ColorRect).color
-	_check(fog_color.b < fog_color.g + 0.001 or fog_color.b > fog_color.r, "day 2 palette is cold-toned")
+	# Non-tautological colour check: compare against the day-1 sky actually observed a moment ago.
+	var sky := (forest.get_node("Sky") as ColorRect).color
+	_check(not sky.is_equal_approx(_day1_sky), "day 2 sky differs from the day-1 sky (day1 %s vs day2 %s)" % [
+		str(_day1_sky), str(sky)])
+	_check(sky.b > _day1_sky.b + 0.03 and sky.b > sky.r + 0.05,
+		"day 2 sky is colder/bluer than day 1 (r=%.2f b=%.2f vs r=%.2f b=%.2f)" % [
+			sky.r, sky.b, _day1_sky.r, _day1_sky.b])
 
 	var obstacle := forest.get_node_or_null("Props/Obstacle")
 	if obstacle == null:
@@ -426,11 +433,17 @@ func _day3_forest() -> void:
 	await _press()
 	_check(GameState.wood == 0, "day 3 requires no wood")
 
-	# --- the way home is closed
+	# --- the way home is closed (reported on the HUD, never through a dialogue opened from _process)
 	await _place(player, 80.0)
 	await _frames(20)
 	_check(get_tree().current_scene == forest, "the return zone does not send the player home on day 3")
-	await _close_dialogue()
+	_check(not Dialogue.is_active(), "day 3 does not open a dialogue from _process (CONTRACT §6)")
+	_check(_hud_status().contains("não há caminho de volta"),
+		"the closed exit is reported on the HUD (got '%s')" % _hud_status())
+	await _place(player, 400.0)
+	await _frames(5)
+	_check(_hud_status().contains("ela espera"),
+		"leaving the closed exit restores the day-3 status (got '%s')" % _hud_status())
 
 	# --- the spirit physically blocks the way forward and ends the run
 	# Walk into it from the left: the blocker must stop the player short of it (progress impossible).
