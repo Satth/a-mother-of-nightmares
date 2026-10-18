@@ -158,3 +158,8 @@ build exported and opened outside the editor; release committed and pushed.
   - Limitation: sustained key *holds* could not be verified this way (the page has no OS focus, and Godot
     clears held keys on blur), so continuous walking in the Web build is covered by the headless journey
     test and the Windows build, not by the browser run.
+- 2026-10-17 · lead · **itch.io upload package prepared.** `build/itchio/a-mother-of-nightmares-web.zip`
+  (10,264,260 bytes) with `index.html` at the ZIP root and only the files the runtime needs
+  (`index.html/js/wasm/pck`, the two icons and the two audio worklets — the stray `*.import` sidecars that
+  `--headless --import` created inside `build/web` are excluded). Upload as an HTML5 game on itch.io.
+  Build artifacts stay gitignored; they are regenerated with the commands in `CONTRACT.md` §9.
