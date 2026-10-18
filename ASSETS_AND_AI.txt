@@ -1,163 +1,144 @@
 A MOTHER OF NIGHTMARES — REGISTRO DE ASSETS E USO DE IA
 Game Jam Caruaru 2026 | Registro vivo de auditoria
+Última atualização: 2026-10-17 (durante a produção, não "de memória")
 
 IMPORTANTE
 - Preencher durante a produção, sempre que um asset, plugin, script externo ou conteúdo de IA for incorporado/modificado.
-- Não registrar como “livre” sem verificar a licença exata do item.
+- Não registrar como "livre" sem verificar a licença exata do item.
 - O regulamento exige uso de assets cujo regime de licença permita uso comercial, créditos e links na página do itch.io, declaração de IA e Anexo III assinado por todos. Este arquivo NÃO substitui esses requisitos.
-- Se uma categoria não foi usada, escrever explicitamente “Não utilizado” depois da conferência. Não declarar “não usamos IA” se código, arte, áudio ou texto foi gerado/modificado por IA.
+- Se uma categoria não foi usada, escrever explicitamente "Não utilizado" depois da conferência. Não declarar "não usamos IA" se código, arte, áudio ou texto foi gerado/modificado por IA.
 
 ============================================================
 1. ASSETS VISUAIS DE TERCEIROS (sprites, tilesets, cenários, texturas)
 ============================================================
-Para cada recurso usado, duplicar e preencher esta ficha:
+**NÃO UTILIZADO.** Nenhuma imagem, sprite sheet, tileset, textura ou cenário de terceiros foi
+incorporado até o momento. Todos os elementos visuais do jogo são placeholders primitivos
+(`ColorRect`, `Polygon2D`, `Label`) desenhados em código pela equipe. Nenhuma licença de terceiros é
+necessária para esta categoria enquanto isso permanecer verdade.
 
-- Nome do asset/pacote:
-- Autor/criador:
-- Tipo e conteúdo utilizado:
-- URL exata da página do asset:
-- URL/evidência da licença:
-- Licença exata e versão:
-- Uso comercial permitido? (Sim/Não/Não verificado — não incorporar sem confirmar):
-- Arquivos/caminhos incorporados no projeto:
-- Modificações realizadas:
-- Crédito que deve aparecer na página do jogo/pitch:
-- Já foi adicionado aos créditos do itch.io? (Sim/Não)
-- Verificado por/data:
-
-ASSET VISUAL 1
-- Nome do asset/pacote:
-- Autor/criador:
-- Tipo e conteúdo utilizado:
-- URL exata da página do asset:
-- URL/evidência da licença:
-- Licença exata e versão:
-- Uso comercial permitido? (Sim/Não/Não verificado):
-- Arquivos/caminhos incorporados no projeto:
-- Modificações realizadas:
-- Crédito exigido:
-- Adicionado ao itch.io? (Sim/Não)
-- Verificado por/data:
+- Nome do asset/pacote: Não utilizado
+- Autor/criador: —
+- URL do asset: —
+- Licença: —
+- Uso comercial permitido? Não aplicável
+- Arquivos incorporados: —
+- Verificado por/data: lead (agente), 2026-10-17
 
 ============================================================
 2. ÁUDIO E MÚSICA DE TERCEIROS
 ============================================================
-Duplicar a ficha para cada som/música/ambiente:
+**NÃO UTILIZADO.** Nenhum áudio ou música foi incorporado. Áudio permanece fora do escopo até o
+caminho crítico (fluxo jogável fim a fim) estar estável. Se for adicionado depois, cada faixa deve
+ser registrada aqui com autor, URL, licença (CC0/CC-BY apenas; nunca NC) e crédito.
 
-- Nome da faixa/efeito:
-- Autor/criador:
-- URL exata do arquivo/página:
-- URL/evidência da licença:
-- Licença exata e versão:
-- Uso comercial permitido? (Sim/Não/Não verificado):
-- Arquivo/caminho no projeto:
-- Modificações (corte, loop, equalização, mixagem etc.):
-- Crédito exigido:
-- Adicionado ao itch.io? (Sim/Não)
-- Verificado por/data:
-
-ÁUDIO 1
-- Nome:
-- Autor:
-- URL do asset:
-- URL/evidência da licença:
-- Licença:
-- Uso comercial permitido? (Sim/Não/Não verificado):
-- Caminho no projeto:
-- Modificações:
-- Crédito exigido:
-- Adicionado ao itch.io? (Sim/Não)
-- Verificado por/data:
+- Nome da faixa/efeito: Não utilizado
+- Autor/criador: —
+- URL do arquivo: —
+- Licença: —
+- Uso comercial permitido? Não aplicável
+- Caminho no projeto: —
+- Verificado por/data: lead (agente), 2026-10-17
 
 ============================================================
 3. FONTE, PLUGIN, ADD-ON, SCRIPT OU CÓDIGO DE TERCEIROS
 ============================================================
-Registrar também recursos baixados da Godot Asset Library, GitHub, npm ou outra fonte, mesmo que sejam gratuitos.
+RECURSO DE TERCEIROS 1 — Godot MCP (addon do editor)
+- Nome do recurso: Godot Editor MCP — Addon (`addons/godot_mcp`)
+- Autor/projeto: hybridindie ("Johnny D")
+- Tipo: add-on de editor Godot (ferramenta de desenvolvimento; NÃO é conteúdo do jogo)
+- URL/versão: https://github.com/hybridindie/godot-mcp · versão declarada em `plugin.cfg`: 2026.10.15
+- Licença exata: MIT — "Copyright (c) 2026 Johnny D" (obtida de
+  https://github.com/hybridindie/godot-mcp/blob/main/LICENSE, SHA do blob e9ee1361caed6981016b3f18b21400a980ec3242).
+  Observação: o arquivo `LICENSE` NÃO está presente na cópia vendorizada em `addons/godot_mcp/`.
+- Uso comercial compatível? Sim (MIT permite uso, cópia, modificação e distribuição comercial),
+  DESDE que o aviso de copyright e a permissão sejam incluídos.
+- Caminhos/arquivos incorporados: `addons/godot_mcp/**` (107 arquivos), habilitado em `project.godot`
+  (`[editor_plugins] enabled=...`).
+- Alterações feitas pela equipe/IA: nenhuma no código do addon.
+- Avisos/creditação necessários: incluir o texto MIT + "Copyright (c) 2026 Johnny D" nos créditos
+  OU garantir que o addon não faça parte da fonte/build publicada.
+- AÇÃO PENDENTE (bloqueia conformidade): (a) adicionar `addons/godot_mcp/LICENSE` com o texto MIT, e/ou
+  (b) configurar o preset de export para **excluir `addons/`** da build jogável, e (c) listar o addon
+  nos créditos. Responsável: lead. Status: pendente.
+- Publicado nos créditos? Não (pendente)
+- Verificado por/data: lead (agente), 2026-10-17
 
-- Nome do recurso:
-- Autor/projeto:
-- Tipo (fonte, plugin, script, biblioteca etc.):
-- URL exata do projeto e da versão usada:
-- Licença exata:
-- Uso/distribuição comercial compatível? (Sim/Não/Não verificado):
-- Caminhos/arquivos incorporados:
-- Alterações feitas pela equipe/IA:
-- Créditos/avisos de licença necessários:
-- Adicionado à página do itch.io/pitch se aplicável? (Sim/Não/Não aplicável)
-- Verificado por/data:
-
-RECURSO DE TERCEIROS 1
-- Nome:
-- Autor/projeto:
-- Tipo:
-- URL/versão:
-- Licença:
-- Uso comercial compatível? (Sim/Não/Não verificado):
-- Caminhos:
-- Alterações:
-- Avisos/creditação:
-- Publicado nos créditos? (Sim/Não/Não aplicável)
-- Verificado por/data:
+RECURSO DE TERCEIROS 2 — Godot Engine
+- Nome do recurso: Godot Engine 4.7.2-stable (runtime/editor)
+- Autor/projeto: Godot Engine contributors (MIT)
+- Tipo: engine (não é conteúdo de jogo; não é redistribuído como asset)
+- URL/versão: https://godotengine.org · 4.7.2.stable.official.ed1daf0bf
+- Licença: MIT
+- Uso comercial compatível? Sim
+- Caminhos: não versionado no projeto (engine é externa)
+- Avisos/creditação: crédito à Godot Engine recomendado na página do jogo
+- Verificado por/data: lead (agente), 2026-10-17
 
 ============================================================
 4. CONTEÚDO GERADO OU MODIFICADO POR IA
 ============================================================
-O regulamento pede conteúdo afetado e ferramenta usada. Criar uma entrada por categoria/entrega relevante; se um mesmo agente modificar muitos arquivos semelhantes, listar todos os caminhos ou um conjunto claramente delimitado.
+Regra aplicada: todo código, cena, texto e documentação abaixo foi escrito/modificado por agentes de
+IA durante a jam. A ferramenta de orquestração (OpenCode) é DIFERENTE do modelo generativo. Informamos
+apenas o que é verificável nesta sessão; nenhum modelo ou licença foi inventado.
 
-- Categoria: (código / arte / áudio / texto / roteiro / outro)
-- Conteúdo gerado ou modificado:
-- Arquivos, cenas, assets ou trechos afetados:
-- Ferramenta(s) de IA usada(s):
-- Modelo exato e provedor, quando conhecido:
-- OpenCode/OpenRouter usados? Descrever o papel sem inventar modelo:
-- Godot MCP usado? Descrever como ferramenta de edição/teste, sem confundi-lo com o modelo gerador:
-- Como o conteúdo foi utilizado:
-- Revisão humana/teste realizado:
-- Responsável/data:
-- Informações transcritas para itch.io/pitch/Anexo III? (Sim/Não)
+IA 1 — Código e cenas do jogo (GDScript / `.tscn`)
+- Categoria: código + cenas + texto de diálogo (placeholders)
+- Conteúdo gerado/modificado: configuração do projeto, autoloads, controlador do jogador, sistema de
+  interação/diálogo, HUD, transições com fade, cenas de casa, floresta, final, e os placeholders visuais.
+- Arquivos/trechos afetados: `project.godot`; `scripts/autoload/{game_state,dialogue,hud,scene_transition}.gd`;
+  `scripts/player/player_controller.gd`; `scripts/interactions/interactable.gd`; `scenes/player/player.tscn`;
+  `tools/validate_project.gd` + `tools/validate.tscn`; e (produzidos por agentes executores)
+  `scenes/house_interior.tscn`, `scenes/forest.tscn`, `scenes/ending.tscn`, `scripts/forest_loop.gd`,
+  `scripts/house_interior.gd`, `scripts/ending.gd`, `scripts/interactables/*.gd`,
+  `scenes/interactables/*.tscn`, `scripts/visual/atmosphere.gd`.
+- Ferramenta(s) de IA: OpenCode (harness de agente de código) com subagentes (`explore` e `general`).
+- Modelo exato e provedor: conforme configurado nesta sessão — provedor `opencode`, modelo
+  `deepseek-v4.1-flash-free` (exibido como "DeepSeek V4.1 Flash Free").
+- OpenCode/OpenRouter usados? OpenCode: sim (orquestração, escrita de arquivos, git, execução do Godot
+  em modo headless). OpenRouter: não usado diretamente nesta sessão.
+- Godot MCP usado? O addon está instalado, mas o bridge estava OFFLINE nesta sessão (conflito de porta
+  9080). Portanto o MCP **não** foi usado para criar/editar conteúdo; a validação foi feita executando o
+  binário do Godot por linha de comando (headless).
+- Como foi utilizado: geração e revisão de código, criação de cenas por texto (`.tscn` escrito à mão),
+  e testes de fumaça headless (`res://tools/validate.tscn`).
+- Validação humana/teste realizado: **PENDENTE**. O lead deve revisar o diff e jogar o fluxo completo
+  antes da entrega (AGENTS.md §4 e §12).
+- Responsável/data: lead (agente) + equipe, 2026-10-17
+- Declarado no itch.io/pitch/Anexo III? Não (pendente)
 
-IA 1
-- Categoria:
-- Conteúdo gerado/modificado:
-- Arquivos/trechos afetados:
-- Ferramenta(s) de IA:
-- Modelo/provedor exato, se conhecido:
-- Como foi utilizado:
-- Validação humana:
-- Responsável/data:
-- Declarado no itch.io/pitch/Anexo III? (Sim/Não)
-
-IA 2
-- Categoria:
-- Conteúdo gerado/modificado:
-- Arquivos/trechos afetados:
-- Ferramenta(s) de IA:
-- Modelo/provedor exato, se conhecido:
-- Como foi utilizado:
-- Validação humana:
-- Responsável/data:
-- Declarado no itch.io/pitch/Anexo III? (Sim/Não)
+IA 2 — Documentação de produção
+- Categoria: texto/documentação
+- Conteúdo gerado/modificado: `CONTRACT.md` (contrato entre módulos) e `TFBOARD.md` (quadro de tarefas);
+  revisão de `project.godot` e do `.gitignore`.
+- Ferramenta/modelo: idem IA 1 (OpenCode; `opencode/deepseek-v4.1-flash-free`).
+- Validação humana: pendente.
+- Declarado no itch.io/pitch/Anexo III? Não (pendente)
 
 ============================================================
 5. CONTEÚDO CRIADO ORIGINALMENTE PELA EQUIPE
 ============================================================
-Usar esta seção como inventário interno; não substitui a declaração de IA se uma ferramenta de IA tiver gerado/modificado parte do conteúdo.
+Nota: "criado pela equipe" aqui significa criado do zero (não derivado de terceiros). Como a escrita
+foi feita por agentes de IA, a Seção 4 acima também se aplica — esta seção é um inventário, não uma
+isenção da declaração de IA.
 
-- Elemento (sprite, animação, texto, diálogo, música, código etc.):
-- Autor(es) da equipe:
-- Caminho no projeto:
-- Criado do zero ou derivado/modificado de outro recurso? Se derivado, preencher as seções de terceiros.
-- Participação de IA? Se sim, preencher a seção 4.
+- Sistema de estado do jogo (dias/madeira/machado): `scripts/autoload/game_state.gd` — novos.
+- Caixa de diálogo, HUD e transição/fade: `scripts/autoload/{dialogue,hud,scene_transition}.gd` — novos.
+- Controlador do jogador e interação por `E`: `scripts/player/player_controller.gd`,
+  `scripts/interactions/interactable.gd` — novos.
+- Cenas: casa, floresta, final + interativos — novos.
+- Placeholders visuais: formas primitivas — novas, sem dependência de terceiros.
+- Participação de IA? SIM — ver Seção 4.
 
 ============================================================
 6. CHECKLIST DE PUBLICAÇÃO E CONFORMIDADE
 ============================================================
+[x] Nenhum recurso com licença NC/NonCommercial, pago ou desconhecido foi usado como conteúdo de jogo.
 [ ] Cada recurso externo incorporado tem origem e licença exatas registradas.
-[ ] Nenhum recurso com licença NC/NonCommercial, pago ou desconhecido foi usado.
+    → Godot MCP (MIT) registrado; falta adicionar o arquivo de licença e/ou excluí-lo do export.
 [ ] Todas as licenças permitem o uso previsto; atribuições e avisos foram preparados.
 [ ] O registro corresponde aos arquivos efetivamente presentes na build final.
-[ ] Créditos e lista de assets gratuitos de terceiros, com links e licenças, foram publicados na página do itch.io.
-[ ] O uso de IA está declarado e as ferramentas estão identificadas corretamente.
+[ ] Créditos e lista de assets gratuitos de terceiros, com links e licenças, publicados na página do itch.io.
+[ ] O uso de IA está declarado e as ferramentas estão identificadas corretamente (itch.io/pitch/Anexo III).
 [ ] O pitch inclui as informações de assets/IA solicitadas.
 [ ] O Anexo III do regulamento foi preenchido e assinado por todos os integrantes.
 [ ] O teste final foi realizado na build exportada, não somente no editor.
