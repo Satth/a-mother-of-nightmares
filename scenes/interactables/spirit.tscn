@@ -11,18 +11,18 @@ prompt_text = "Falar com o espírito"
 
 [node name="Aura" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(0, -240, 56, -120, 40, 0, -40, 0, -56, -120)
-color = Color(0.42, 0.46, 0.58, 0.35)
+color = Color(0.42, 0.46, 0.58, 0.45)
 
 [node name="Body" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(0, -216, 34, -104, 24, 0, -24, 0, -34, -104)
-color = Color(0.72, 0.78, 0.86, 0.55)
+color = Color(0.72, 0.78, 0.86, 0.72)
 
 [node name="Head" type="ColorRect" parent="."]
 offset_left = -13.0
 offset_top = -248.0
 offset_right = 13.0
 offset_bottom = -220.0
-color = Color(0.82, 0.86, 0.92, 0.6)
+color = Color(0.82, 0.86, 0.92, 0.8)
 
 [node name="Blocker" type="StaticBody2D" parent="."]
 
