@@ -80,7 +80,7 @@ func transition_to(scene_path: String, fade_out := 0.35, fade_in := 0.35) -> voi
 ### `Atmosphere` — `res://scripts/visual/atmosphere.gd` (CanvasLayer, layer 40)
 Per-day colour-grade overlay only. Officially RECOMMENDED but **optional**: registered by the lead and
 safe to remove. It reacts to `GameState.day_changed` and reads nothing else. Nothing may depend on it.
-(Not registered in `project.godot` until the lead integrates T5.)
+**Status: REGISTERED** in `project.godot` (5th autoload, integrated with T5).
 
 ---
 

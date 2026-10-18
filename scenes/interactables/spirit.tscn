@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactables/spirit.gd" id="1_spirit"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_spirit"]
+size = Vector2(16, 72)
+
+[node name="Spirit" type="Node2D" groups=["interactable"]]
+script = ExtResource("1_spirit")
+prompt_text = "Falar com o espírito"
+
+[node name="Aura" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, -240, 56, -120, 40, 0, -40, 0, -56, -120)
+color = Color(0.42, 0.46, 0.58, 0.35)
+
+[node name="Body" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, -216, 34, -104, 24, 0, -24, 0, -34, -104)
+color = Color(0.72, 0.78, 0.86, 0.55)
+
+[node name="Head" type="ColorRect" parent="."]
+offset_left = -13.0
+offset_top = -248.0
+offset_right = 13.0
+offset_bottom = -220.0
+color = Color(0.82, 0.86, 0.92, 0.6)
+
+[node name="Blocker" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blocker"]
+position = Vector2(0, -36)
+shape = SubResource("RectangleShape2D_spirit")

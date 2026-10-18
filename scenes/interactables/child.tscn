@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactables/child.gd" id="1_child"]
+
+[node name="Child" type="Node2D" groups=["interactable"]]
+script = ExtResource("1_child")
+prompt_text = "Falar com o filho"
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Body" type="ColorRect" parent="Visual"]
+offset_left = -11.0
+offset_top = -56.0
+offset_right = 11.0
+offset_bottom = 0.0
+color = Color(0.74, 0.79, 0.87, 1)
+
+[node name="Head" type="ColorRect" parent="Visual"]
+offset_left = -9.0
+offset_top = -74.0
+offset_right = 9.0
+offset_bottom = -56.0
+color = Color(0.89, 0.81, 0.72, 1)
+
+[node name="Hair" type="ColorRect" parent="Visual"]
+offset_left = -9.0
+offset_top = -76.0
+offset_right = 9.0
+offset_bottom = -68.0
+color = Color(0.28, 0.24, 0.22, 1)

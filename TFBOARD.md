@@ -13,11 +13,11 @@
 |----|------|---------------|----------|-----------|--------|
 | T1 | Recon audit: acceptance checklist + risk list (read-only) | `scout` (explore) | P0 | — | ✅ done |
 | T2 | Foundation: `project.godot`, autoloads, player, interactable base | `lead` | P0 | — | ✅ done |
-| T3 | House scene + child/axe/door + day-3 empty room | `builder-core` (general) | P0 | T2 | ⏳ |
-| T4 | Forest loop (3 trees, dusk, return, day2 obstacle, day3 spirit) + ending | `builder-forest` (general) | P0 | T2 | ⏳ |
-| T5 | Atmosphere: per-day tint/overlay autoload (no scene edits) | `atmos` (general) | P2 | T2 | 🟡 delivered, awaiting lead registration |
+| T3 | House scene + child/axe/door + day-3 empty room | `builder-core` (general) | P0 | T2 | ✅ done |
+| T4 | Forest loop (3 trees, dusk, return, day2 obstacle, day3 spirit) + ending | `builder-forest` (general) | P0 | T2 | ✅ done |
+| T5 | Atmosphere: per-day tint/overlay autoload (no scene edits) | `atmos` (general) | P2 | T2 | ✅ done (registered by lead) |
 | T6 | Review: verify T3/T4/T5 against acceptance + smoke test (read-only) | `reviewer` (explore) | P0 | T3, T4, T5 | ⏳ |
-| T7 | Integration: merge diffs, headless journey test, export, release | `lead` | P0 | T6 | ⏳ |
+| T7 | Integration: merge diffs, headless journey test, export, release | `lead` | P0 | T6 | 🟡 in progress |
 
 **Conflict policy:** the file-ownership table in `CONTRACT.md` §1 is binding. Two agents must never
 write the same file. `project.godot`, `CONTRACT.md`, `TFBOARD.md`, `ASSETS_AND_AI.txt` are **lead-only**.
@@ -81,3 +81,18 @@ build exported and opened outside the editor; release committed and pushed.
 - 2026-10-17 · `atmos` · **T5 delivered** (`scripts/visual/atmosphere.gd`, layer 40, distinct per-day
   tints, day-2 fog). Self-test output recorded. Not yet registered as an autoload; safe to remove.
   Assets/IA: no third-party asset, nothing generated beyond the script itself.
+- 2026-10-17 · lead · **T3 + T4 integrated.** `--headless --import` → exit 0; `res://tools/validate.tscn`
+  → `PROBED_OK` for player/house/forest/ending + `VALIDATE_OK`, exit 0. `Atmosphere` registered as the
+  5th autoload in `project.godot` (layer 40, under the HUD at 50).
+- 2026-10-17 · lead · **NEW: end-to-end journey test** `tools/journey_test.tscn` (+ `.gd`). It drives the
+  real scenes with real `InputEventAction` presses through the Input Map and asserts every step of the
+  AGENTS.md §12 smoke test (child → axe → locked door → 3 trees → dusk → return → day 2 fog/obstacle →
+  day 3 empty bed → spirit → ending → restart). Evidence:
+  `& "<godot console>" --headless --path "<project>" res://tools/journey_test.tscn` →
+  **`journey summary: 88 checks, 0 failures` / `JOURNEY_OK`, exit 0, no `SCRIPT ERROR`/`WARNING`.**
+  Notable verified behaviours: holding `E` on a tree cannot over-count; the door is inert without the
+  axe; day 2's branch both blocks the third tree and stops the player physically; the spirit stops the
+  player at `x=540`; restarting resets day/wood/axe and brings the child back.
+- 2026-10-17 · lead · Two *test-side* bugs found and fixed while writing the journey test (not game
+  bugs): (1) the first version walked *away* from the spirit, so blocking was never exercised;
+  (2) a message formatted `scene.name` on a scene the transition had already freed.

@@ -21,6 +21,7 @@ GameState="*res://scripts/autoload/game_state.gd"
 Dialogue="*res://scripts/autoload/dialogue.gd"
 HUD="*res://scripts/autoload/hud.gd"
 SceneTransition="*res://scripts/autoload/scene_transition.gd"
+Atmosphere="*res://scripts/visual/atmosphere.gd"
 
 [display]
 

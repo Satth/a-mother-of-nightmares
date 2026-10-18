@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/interactables/door.gd" id="1_door"]
+
+[node name="Door" type="Node2D" groups=["interactable"]]
+script = ExtResource("1_door")
+prompt_text = "Sair para a floresta"
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Frame" type="ColorRect" parent="Visual"]
+offset_left = -46.0
+offset_top = -124.0
+offset_right = 46.0
+offset_bottom = 0.0
+color = Color(0.33, 0.25, 0.19, 1)
+
+[node name="Panel" type="ColorRect" parent="Visual"]
+offset_left = -38.0
+offset_top = -116.0
+offset_right = 38.0
+offset_bottom = -6.0
+color = Color(0.46, 0.35, 0.26, 1)
+
+[node name="Knob" type="ColorRect" parent="Visual"]
+offset_left = 20.0
+offset_top = -66.0
+offset_right = 30.0
+offset_bottom = -56.0
+color = Color(0.86, 0.79, 0.46, 1)
