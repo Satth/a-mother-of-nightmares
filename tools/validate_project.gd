@@ -60,18 +60,22 @@ func _ready() -> void:
 		if gs.day != 1 or gs.wood != 0:
 			failures.append("reset after day 3 failed")
 
-	# 5. Player scene
-	var player_scene := load("res://scenes/player/player.tscn") as PackedScene
-	if player_scene == null:
-		failures.append("cannot load res://scenes/player/player.tscn")
-	else:
-		var inst := player_scene.instantiate()
-		if inst == null:
-			failures.append("cannot instantiate the player scene")
+	# 5. Player scene — instantiate AND add to the tree so _ready() actually runs
+	#    (a _ready-time type error like the old `_visual: Node2D = ColorRect` only shows then).
+	if not _probe_scene("res://scenes/player/player.tscn", failures, true):
+		failures.append("player scene failed to load/instantiate")
+
+	# 6. Optional gameplay scenes: instantiate + _ready, and require a player inside.
+	for scene_path in [
+		"res://scenes/house_interior.tscn",
+		"res://scenes/forest.tscn",
+		"res://scenes/ending.tscn",
+	]:
+		if ResourceLoader.exists(scene_path):
+			# Every playable scene must contain a Player; the ending scene does not.
+			_probe_scene(scene_path, failures, not scene_path.ends_with("ending.tscn"))
 		else:
-			if not inst.is_in_group("player"):
-				failures.append("player instance is not in group 'player'")
-			inst.free()
+			print("SKIP (not built yet): ", scene_path)
 
 	if failures.is_empty():
 		print("VALIDATE_OK")
@@ -80,3 +84,29 @@ func _ready() -> void:
 		for f in failures:
 			printerr("VALIDATE_FAIL: ", f)
 		get_tree().quit(1)
+
+
+## Loads a scene, adds it to the tree (running _ready), checks for a Player child, then frees it.
+func _probe_scene(path: String, failures: Array[String], require_player: bool) -> bool:
+	var packed := load(path) as PackedScene
+	if packed == null:
+		failures.append("cannot load %s" % path)
+		return false
+	var inst := packed.instantiate()
+	if inst == null:
+		failures.append("cannot instantiate %s" % path)
+		return false
+	add_child(inst)
+	if require_player:
+		var found := inst.is_in_group("player")
+		if not found:
+			for child in inst.find_children("*", "", true, false):
+				if child.is_in_group("player"):
+					found = true
+					break
+		if not found:
+			failures.append("%s contains no Player instance" % path)
+	remove_child(inst)
+	inst.free()
+	print("PROBED_OK: ", path)
+	return true

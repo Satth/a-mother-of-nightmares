@@ -72,8 +72,15 @@ func set_status(text: String) -> void   # top-left status line, e.g. "Dia 1/3 �
 ```gdscript
 signal transition_finished
 func is_busy() -> bool
-func transition_to(scene_path: String, fade_out := 0.35, fade_in := 0.35) -> void  # await-able; awaits internally
+func transition_to(scene_path: String, fade_out := 0.35, fade_in := 0.35) -> void
 ```
+**Call it WITHOUT `await` from scene scripts.** `change_scene_to_file` frees the caller node, so
+`await SceneTransition.transition_to(...)` can resume on a freed node and error. Fire and forget.
+
+### `Atmosphere` — `res://scripts/visual/atmosphere.gd` (CanvasLayer, layer 40)
+Per-day colour-grade overlay only. Officially RECOMMENDED but **optional**: registered by the lead and
+safe to remove. It reacts to `GameState.day_changed` and reads nothing else. Nothing may depend on it.
+(Not registered in `project.godot` until the lead integrates T5.)
 
 ---
 
@@ -100,7 +107,7 @@ Player (CharacterBody2D, groups=["player"])   script: scripts/player/player_cont
 Public API on `player_controller.gd`:
 ```gdscript
 @export var speed := 220.0
-@export var interact_range := 56.0
+@export var interact_range := 60.0
 var input_enabled := true
 var current_target: Node = null
 func set_input_enabled(v: bool) -> void
@@ -160,6 +167,33 @@ Rules (from AGENTS.md §6):
 - Cutting is counted **per interaction**; holding `interact` must not add wood repeatedly.
 - The door must not work before the axe is obtained.
 - Day 3 ends at the spirit; no impossible task after it appears.
+
+### Binding clarifications (freeze — added after the scout audit)
+
+- **`mark_used()` is the subclass's job.** `Interactable.interact()` is a no-op and does NOT auto-mark.
+  Every `one_shot` interactable MUST call `mark_used()` inside its own `interact()`.
+- **Dialogue double-trigger is solved by input order.** The player calls `set_input_as_handled()` after
+  `interact()`, and scene nodes receive `_unhandled_input` *before* autoloads, so the same `E` press
+  cannot both open and advance the dialogue. Do not bypass the player to open dialogue from `_process`.
+- **Door gating is via `can_interact()`**: `door.gd` overrides it to return `GameState.has_axe`.
+- **Axe, on pickup**: `GameState.set_axe(true)` + `mark_used()` + hide the visual (no ghost prompt).
+- **Return trigger**: a plain position check in `_process` (never a physics layer). Fires only when
+  `GameState.wood_complete()` and only days 1–2, guarded by a once-only flag and `SceneTransition.is_busy()`.
+- **Day 3 forest flow**: the spirit is present from scene start and blocks the left exit; the player is
+  NOT required to cut any tree on day 3. `Spirit` is an `Interactable`; `interact()` →
+  `SceneTransition.transition_to("res://scenes/ending.tscn")`.
+- **HUD status string** (canonical): `"Dia %d/3 — Madeira %d/3"`.
+- **Day 3 house**: child removed and a distinct empty-bed visual shown; the axe remains obtainable.
+
+### Workflow note — regenerate the class cache before headless runs
+
+`class_name` types (`Interactable`, `PlayerController`) resolve from `.godot/global_script_class_cache.cfg`,
+which is gitignored and only rebuilt by the **editor**. After pulling new `class_name` scripts, run once:
+```
+& "<godot>" --headless --path "<project root>" --import
+```
+(prints `update_scripts_classes ... [ DONE ]`) before any headless scene run, otherwise you get
+`Parse Error: Could not find base class "Interactable"`. Diagnostic probe: `res://tools/probe_ext.tscn`.
 
 ### Forest scene contract (builder-forest)
 - Node `Forest` (Node2D) + `scripts/forest_loop.gd`.

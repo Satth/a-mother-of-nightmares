@@ -11,11 +11,11 @@
 
 | ID | Task | Owner (agent) | Priority | Depends on | Status |
 |----|------|---------------|----------|-----------|--------|
-| T1 | Recon audit: acceptance checklist + risk list (read-only) | `scout` (explore) | P0 | — | ⏳ |
+| T1 | Recon audit: acceptance checklist + risk list (read-only) | `scout` (explore) | P0 | — | ✅ done |
 | T2 | Foundation: `project.godot`, autoloads, player, interactable base | `lead` | P0 | — | ✅ done |
 | T3 | House scene + child/axe/door + day-3 empty room | `builder-core` (general) | P0 | T2 | ⏳ |
 | T4 | Forest loop (3 trees, dusk, return, day2 obstacle, day3 spirit) + ending | `builder-forest` (general) | P0 | T2 | ⏳ |
-| T5 | Atmosphere: per-day tint/overlay autoload (no scene edits) | `atmos` (general) | P2 | T2 | ⏳ |
+| T5 | Atmosphere: per-day tint/overlay autoload (no scene edits) | `atmos` (general) | P2 | T2 | 🟡 delivered, awaiting lead registration |
 | T6 | Review: verify T3/T4/T5 against acceptance + smoke test (read-only) | `reviewer` (explore) | P0 | T3, T4, T5 | ⏳ |
 | T7 | Integration: merge diffs, headless journey test, export, release | `lead` | P0 | T6 | ⏳ |
 
@@ -65,3 +65,19 @@ build exported and opened outside the editor; release committed and pushed.
   Input actions `move_left/move_right/interact` present; autoloads `GameState/Dialogue/HUD/SceneTransition`
   up; `GameState` behaviour checks (clamp, day advance, day cap 3, child absent day 3, reset) pass;
   `player.tscn` loads and instantiates. World locked to a single 1280x720 screen, ground `y=600`.
+- 2026-10-17 · lead · **T1 done** (`scout`, read-only). Verdict: "skeleton ready" is FALSE; only the T2
+  foundation existed. Full MVP→file map, top-5 risks and the 11-step smoke-test map delivered. Scout also
+  caught the stale class cache (below).
+- 2026-10-17 · lead · **BLOCKER found and fixed (class cache).** `extends Interactable` failed headlessly
+  (`Parse Error: Could not find base class "Interactable"`). Cause: `.godot/global_script_class_cache.cfg`
+  is gitignored and only rebuilt by the editor. Fix: `--headless --import` (prints `update_scripts_classes [ DONE ]`).
+  Now `tools/probe_ext.tscn` → `PROBE_EXTENDS_INTERACTABLE_OK`. Documented in `CONTRACT.md`.
+- 2026-10-17 · lead · **BLOCKER (open): export templates absent.** `%APPDATA%\Godot\export_templates` is
+  empty, no `.tpz` on disk → no exported build possible. User approved downloading the official
+  1.28 GB `Godot_v4.7.2-stable_export_templates.tpz`. In progress (background).
+- 2026-10-17 · lead · Contract clarifications from the scout applied: `interact_range` 56→60, return
+  trigger semantics, day-3 flow, spirit, `mark_used()` rule, `transition_to` without `await`, door gating,
+  axe visual, canonical HUD string.
+- 2026-10-17 · `atmos` · **T5 delivered** (`scripts/visual/atmosphere.gd`, layer 40, distinct per-day
+  tints, day-2 fog). Self-test output recorded. Not yet registered as an autoload; safe to remove.
+  Assets/IA: no third-party asset, nothing generated beyond the script itself.
