@@ -140,3 +140,21 @@ build exported and opened outside the editor; release committed and pushed.
   Input Map. See `ASSETS_AND_AI.txt` §7.
 - 2026-10-17 · lead · **Freeze for release.** `builder-forest` (the last writer to the shipped tree) was
   asked to stop and acknowledged; no agent has write access to the frozen tree after this point.
+- 2026-10-17 · lead · **Web (itch.io) build smoke-tested locally.** Served `build/web` through a local
+  static server and loaded it in a browser: the game boots, renders on
+  `OpenGL ES 3.0 (WebGL 2.0) — Compatibility`, single-threaded, and starts on the correct scene
+  (HUD `Dia 1/3 — Madeira 0/3`, house, axe prompt `[E] Pegar o machado`). `application/run/main_scene`
+  inside `index.pck` was re-verified as `res://scenes/house_interior.tscn`.
+  - **Keyboard/action verification in the shipped build:** dispatching a single `interact` (`E`) press to
+    the canvas at spawn removed the axe visual **and** cleared the prompt — i.e. the Input Map and the
+    axe-pickup flow work inside the exported Web build. This closes the reviewer's "real key mapping only
+    proven indirectly" item for the shipped builds.
+  - `variant/thread_support=false` in the Web preset, so the build does **not** need COOP/COEP headers and
+    will run in itch.io's iframe without SharedArrayBuffer.
+  - Note (process): two early captures appeared to show the forest on day 2 and the ending from a fresh
+    load. They were **stale Review-pane frames**, not the build's start state — re-tested on a second,
+    cache-free port and the game consistently starts at the house on day 1, then behaved correctly under
+    the `E` press. Recorded here so the discrepancy is not mistaken for a bug in the audit.
+  - Limitation: sustained key *holds* could not be verified this way (the page has no OS focus, and Godot
+    clears held keys on blur), so continuous walking in the Web build is covered by the headless journey
+    test and the Windows build, not by the browser run.

@@ -312,3 +312,8 @@ Frozen validation order before any release commit:
 & "<godot>" --headless --path . res://tools/journey_test.tscn   # expect JOURNEY_OK, 92 checks, 0 failures, exit 0
 ```
 Then **open the exported build and run it outside the editor** (AGENTS.md §12 step 11).
+
+Web preset detail: `variant/thread_support=false` is **intentional** — a threaded build needs COOP/COEP
+headers, which itch.io's default hosting does not send, and the game would fail to start. Keep it off.
+The Web build was smoke-tested locally (static server + browser): it starts on the house on day 1 and a
+single `interact` press takes the axe and clears the prompt. See `TFBOARD.md` log for details.

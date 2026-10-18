@@ -166,7 +166,8 @@ isenção da declaração de IA.
 [ ] O pitch inclui as informações de assets/IA solicitadas.
 [ ] O Anexo III do regulamento foi preenchido e assinado por todos os integrantes.
 [x] O teste final foi realizado na build exportada, não somente no editor.
-    → Build Windows executada fora do editor e Web exportada; ver Seção 7 (limitação de injeção de teclado).
+    → Build Windows executada fora do editor e build Web carregada em navegador com teste da ação
+      `interact`; ver Seção 7 (inclui as limitações de verificação).
 [ ] Uma cópia do registro e da lista de créditos final foi guardada pela equipe.
 
 Links de referência para procurar recursos (conferir a página e licença de cada item):
@@ -203,6 +204,17 @@ Abertura da build exportada fora do editor (AGENTS.md §12, passo 11):
 
 Limitação registrada (honestidade sobre evidência): a máquina de teste usa escala de DPI 125% e outras
 janelas do sistema se sobrepõem à área de captura, então **não foi possível registrar de forma confiável o
-efeito visual das teclas injetadas** (por exemplo, a posição do jogador após andar). O controle de teclado
-por ações é coberto pelo teste headless, que pressiona as mesmas ações do Input Map nas cenas reais. Para a
-entrega, o lead/equipe deve jogar manualmente a build exportada (checklist AGENTS.md §12) antes de publicar.
+efeito visual das teclas injetadas no executável** (por exemplo, a posição do jogador após andar).
+
+Verificação adicional da build Web (itch.io), servida localmente e aberta no navegador:
+- A build carrega, renderiza (`OpenGL ES 3.0 (WebGL 2.0) — Compatibility`, single-threaded) e **começa na
+  cena correta**: HUD `Dia 1/3 — Madeira 0/3`, casa, prompt `[E] Pegar o machado`.
+  `application/run/main_scene` = `res://scenes/house_interior.tscn` (conferido dentro do `index.pck`).
+- **Teclado/ações na build publicada:** um único pressionamento de `interact` (`E`) no spawn removeu o
+  visual do machado **e** limpou o prompt → o Input Map e o fluxo de pegar o machado funcionam na build
+  Web exportada. `variant/thread_support=false`: a build **não** exige cabeçalhos COOP/COEP e roda no
+  iframe do itch.io sem SharedArrayBuffer.
+- Limitação: teclas **mantidas** não são verificáveis desse modo (a página não tem foco de SO e o Godot
+  limpa teclas pressionadas ao perder foco); o andar contínuo fica coberto pelo teste headless e pela
+  build Windows. O lead/equipe deve jogar manualmente a build exportada (checklist AGENTS.md §12) antes
+  de publicar.
