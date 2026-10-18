@@ -1,0 +1,171 @@
+A MOTHER OF NIGHTMARES — REGISTRO DE ASSETS E USO DE IA
+Game Jam Caruaru 2026 | Registro vivo de auditoria
+
+IMPORTANTE
+- Preencher durante a produção, sempre que um asset, plugin, script externo ou conteúdo de IA for incorporado/modificado.
+- Não registrar como “livre” sem verificar a licença exata do item.
+- O regulamento exige uso de assets cujo regime de licença permita uso comercial, créditos e links na página do itch.io, declaração de IA e Anexo III assinado por todos. Este arquivo NÃO substitui esses requisitos.
+- Se uma categoria não foi usada, escrever explicitamente “Não utilizado” depois da conferência. Não declarar “não usamos IA” se código, arte, áudio ou texto foi gerado/modificado por IA.
+
+============================================================
+1. ASSETS VISUAIS DE TERCEIROS (sprites, tilesets, cenários, texturas)
+============================================================
+Para cada recurso usado, duplicar e preencher esta ficha:
+
+- Nome do asset/pacote:
+- Autor/criador:
+- Tipo e conteúdo utilizado:
+- URL exata da página do asset:
+- URL/evidência da licença:
+- Licença exata e versão:
+- Uso comercial permitido? (Sim/Não/Não verificado — não incorporar sem confirmar):
+- Arquivos/caminhos incorporados no projeto:
+- Modificações realizadas:
+- Crédito que deve aparecer na página do jogo/pitch:
+- Já foi adicionado aos créditos do itch.io? (Sim/Não)
+- Verificado por/data:
+
+ASSET VISUAL 1
+- Nome do asset/pacote:
+- Autor/criador:
+- Tipo e conteúdo utilizado:
+- URL exata da página do asset:
+- URL/evidência da licença:
+- Licença exata e versão:
+- Uso comercial permitido? (Sim/Não/Não verificado):
+- Arquivos/caminhos incorporados no projeto:
+- Modificações realizadas:
+- Crédito exigido:
+- Adicionado ao itch.io? (Sim/Não)
+- Verificado por/data:
+
+============================================================
+2. ÁUDIO E MÚSICA DE TERCEIROS
+============================================================
+Duplicar a ficha para cada som/música/ambiente:
+
+- Nome da faixa/efeito:
+- Autor/criador:
+- URL exata do arquivo/página:
+- URL/evidência da licença:
+- Licença exata e versão:
+- Uso comercial permitido? (Sim/Não/Não verificado):
+- Arquivo/caminho no projeto:
+- Modificações (corte, loop, equalização, mixagem etc.):
+- Crédito exigido:
+- Adicionado ao itch.io? (Sim/Não)
+- Verificado por/data:
+
+ÁUDIO 1
+- Nome:
+- Autor:
+- URL do asset:
+- URL/evidência da licença:
+- Licença:
+- Uso comercial permitido? (Sim/Não/Não verificado):
+- Caminho no projeto:
+- Modificações:
+- Crédito exigido:
+- Adicionado ao itch.io? (Sim/Não)
+- Verificado por/data:
+
+============================================================
+3. FONTE, PLUGIN, ADD-ON, SCRIPT OU CÓDIGO DE TERCEIROS
+============================================================
+Registrar também recursos baixados da Godot Asset Library, GitHub, npm ou outra fonte, mesmo que sejam gratuitos.
+
+- Nome do recurso:
+- Autor/projeto:
+- Tipo (fonte, plugin, script, biblioteca etc.):
+- URL exata do projeto e da versão usada:
+- Licença exata:
+- Uso/distribuição comercial compatível? (Sim/Não/Não verificado):
+- Caminhos/arquivos incorporados:
+- Alterações feitas pela equipe/IA:
+- Créditos/avisos de licença necessários:
+- Adicionado à página do itch.io/pitch se aplicável? (Sim/Não/Não aplicável)
+- Verificado por/data:
+
+RECURSO DE TERCEIROS 1
+- Nome:
+- Autor/projeto:
+- Tipo:
+- URL/versão:
+- Licença:
+- Uso comercial compatível? (Sim/Não/Não verificado):
+- Caminhos:
+- Alterações:
+- Avisos/creditação:
+- Publicado nos créditos? (Sim/Não/Não aplicável)
+- Verificado por/data:
+
+============================================================
+4. CONTEÚDO GERADO OU MODIFICADO POR IA
+============================================================
+O regulamento pede conteúdo afetado e ferramenta usada. Criar uma entrada por categoria/entrega relevante; se um mesmo agente modificar muitos arquivos semelhantes, listar todos os caminhos ou um conjunto claramente delimitado.
+
+- Categoria: (código / arte / áudio / texto / roteiro / outro)
+- Conteúdo gerado ou modificado:
+- Arquivos, cenas, assets ou trechos afetados:
+- Ferramenta(s) de IA usada(s):
+- Modelo exato e provedor, quando conhecido:
+- OpenCode/OpenRouter usados? Descrever o papel sem inventar modelo:
+- Godot MCP usado? Descrever como ferramenta de edição/teste, sem confundi-lo com o modelo gerador:
+- Como o conteúdo foi utilizado:
+- Revisão humana/teste realizado:
+- Responsável/data:
+- Informações transcritas para itch.io/pitch/Anexo III? (Sim/Não)
+
+IA 1
+- Categoria:
+- Conteúdo gerado/modificado:
+- Arquivos/trechos afetados:
+- Ferramenta(s) de IA:
+- Modelo/provedor exato, se conhecido:
+- Como foi utilizado:
+- Validação humana:
+- Responsável/data:
+- Declarado no itch.io/pitch/Anexo III? (Sim/Não)
+
+IA 2
+- Categoria:
+- Conteúdo gerado/modificado:
+- Arquivos/trechos afetados:
+- Ferramenta(s) de IA:
+- Modelo/provedor exato, se conhecido:
+- Como foi utilizado:
+- Validação humana:
+- Responsável/data:
+- Declarado no itch.io/pitch/Anexo III? (Sim/Não)
+
+============================================================
+5. CONTEÚDO CRIADO ORIGINALMENTE PELA EQUIPE
+============================================================
+Usar esta seção como inventário interno; não substitui a declaração de IA se uma ferramenta de IA tiver gerado/modificado parte do conteúdo.
+
+- Elemento (sprite, animação, texto, diálogo, música, código etc.):
+- Autor(es) da equipe:
+- Caminho no projeto:
+- Criado do zero ou derivado/modificado de outro recurso? Se derivado, preencher as seções de terceiros.
+- Participação de IA? Se sim, preencher a seção 4.
+
+============================================================
+6. CHECKLIST DE PUBLICAÇÃO E CONFORMIDADE
+============================================================
+[ ] Cada recurso externo incorporado tem origem e licença exatas registradas.
+[ ] Nenhum recurso com licença NC/NonCommercial, pago ou desconhecido foi usado.
+[ ] Todas as licenças permitem o uso previsto; atribuições e avisos foram preparados.
+[ ] O registro corresponde aos arquivos efetivamente presentes na build final.
+[ ] Créditos e lista de assets gratuitos de terceiros, com links e licenças, foram publicados na página do itch.io.
+[ ] O uso de IA está declarado e as ferramentas estão identificadas corretamente.
+[ ] O pitch inclui as informações de assets/IA solicitadas.
+[ ] O Anexo III do regulamento foi preenchido e assinado por todos os integrantes.
+[ ] O teste final foi realizado na build exportada, não somente no editor.
+[ ] Uma cópia do registro e da lista de créditos final foi guardada pela equipe.
+
+Links de referência para procurar recursos (conferir a página e licença de cada item):
+- Kenney Pixel Pack — a página do pack indica CC0: https://kenney.nl/assets/pixel-pack
+- OpenGameArt — FAQ de licenças e atribuição por asset: https://opengameart.org/content/faq
+- Freesound — FAQ de licenças; não usar CC-BY-NC: https://freesound.org/help/faq/
+- itch.io — assets gratuitos marcados para uso comercial; conferir a licença de cada página: https://itch.io/game-assets/free/tag-commercial-use/tag-pixel-art
+- Godot Asset Library — catálogo gratuito com licenças distintas: https://docs.godotengine.org/en/stable/community/asset_library/what_is_assetlib.html

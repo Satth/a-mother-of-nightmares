@@ -1,0 +1,28 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Godot import cache / exported config that is regenerated
+.import/
+
+# Exported builds (never version, they are regenerable artifacts)
+/build/
+/builds/
+/dist/
+*.pck
+*.zip
+*.exe
+*.dmg
+*.apk
+
+# Secrets / credentials (never commit)
+.env
+*.key
+credentials.json
+secrets.json
+
+# OS / editor cruft
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log
